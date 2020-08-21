@@ -87,6 +87,9 @@ if (matches) {
                         no_column = col;
                         for (var row = 1; row  < ret.values.length; row ++) {
                             var v = ret.values[row][col];
+                            if (v == '') {
+                                continue;
+                            }
                             data.candidates.push(v);
                         }
                     } else if (ret.values[0][col] == '名稱') {
@@ -106,7 +109,10 @@ if (matches) {
                     var scores = [];
                     for (var row  = 1; row  < ret.values.length; row ++) {
                         var v = ret.values[row][col];
-                        if (v == '迴避' || v == '' || v == '#N/A') {
+                        if (v == '迴避' || v == '' || v == '#N/A' || 'string' !== typeof(v) || v.match(/\s+/)) {
+                            continue;
+                        }
+                        if (ret.values[row][no_column] == '') {
                             continue;
                         }
                         scores.push([ret.values[row][no_column], parseFloat(ret.values[row][col])]);
