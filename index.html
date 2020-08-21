@@ -108,6 +108,9 @@ if (matches) {
                         scores.push([ret.values[row][no_column], parseFloat(ret.values[row][col])]);
                     }
                     scores = scores.sort(function(a, b) { return b[1] - a[1]; });
+                    if (!scores.length) {
+                        continue;
+                    }
 
                     var list = '' + scores[0][0];
                     for (var k = 1; k < scores.length; k ++) {
