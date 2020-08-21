@@ -67,6 +67,7 @@ if (matches) {
         load_sheet(spreadsheet_id);
     });
 
+    var name_map = {};
     $('#btn-condorcet').click(function(e){
         e.preventDefault();
         var sheet_id = $('#sheets').val();
@@ -75,6 +76,7 @@ if (matches) {
         $.get(url, function(ret){
                 var vote_list = [];
                 var no_column = -1;
+                var name_column = -1;
                 var result_column = -1;
                 var data = {
                     candidates: [],
@@ -87,6 +89,8 @@ if (matches) {
                             var v = ret.values[row][col];
                             data.candidates.push(v);
                         }
+                    } else if (ret.values[0][col] == '名稱') {
+                        name_column = col;
                     } else if (ret.values[0][col] == '排名') {
                         result_column = col;
                     }
@@ -106,6 +110,10 @@ if (matches) {
                             continue;
                         }
                         scores.push([ret.values[row][no_column], parseFloat(ret.values[row][col])]);
+                        if (name_column > 0) {
+                            console.log(ret.values[row]);
+                            name_map[ret.values[row][no_column]] = ret.values[row][name_column];
+                        }
                     }
                     scores = scores.sort(function(a, b) { return b[1] - a[1]; });
                     if (!scores.length) {
@@ -128,7 +136,13 @@ if (matches) {
                         var rank = 1;
                         var candidate_rank = {};
                         for (var entry of ret) {
-                            $('#result').append($('<tr></tr>').append($('<td></td>').text(entry.rank)).append($('<td></td>').text(entry.candidates.join(', '))));
+                            var t = entry.candidates.join(', ');
+                            if (name_column > 0) {
+                                t = entry.candidates.map(function(i) {
+                                        return i + '(' + name_map[i] + ')';
+                                }).join(', ');
+                            }
+                            $('#result').append($('<tr></tr>').append($('<td></td>').text(entry.rank)).append($('<td></td>').text(t)));
                             for (var c of entry.candidates) {
                                 candidate_rank[c] = rank;
                             }
