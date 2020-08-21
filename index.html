@@ -102,7 +102,7 @@ if (matches) {
                     var scores = [];
                     for (var row  = 1; row  < ret.values.length; row ++) {
                         var v = ret.values[row][col];
-                        if (v == '迴避' || v == '') {
+                        if (v == '迴避' || v == '' || v == '#N/A') {
                             continue;
                         }
                         scores.push([ret.values[row][no_column], parseFloat(ret.values[row][col])]);
