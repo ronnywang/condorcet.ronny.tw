@@ -13,7 +13,9 @@
 <div class="container">
     <button id="btn-auth">驗證</button>
     <form id="form-sheet" style="display:none">
-        Sheet URL: <input type="text" name="sheet-url"><button id="btn-load">Load Sheet</button><br>
+        Sheet URL: <input type="text" name="sheet-url"><button id="btn-load">Load Sheet</button>
+        <a href="https://docs.google.com/spreadsheets/d/1fgpN65iP9fzeBqeLNmTxcCLIPWmTXiAPGkRpFBT85h0/edit#gid=0">範例表單</a>(請從範例表單建立複本，可自行增加「評審XXX」欄位，「編號」、「名稱」、「排名」欄位名稱不能修改)
+        <br>
         Sheet Name: <span id="sheet-name"></span><br>
         Sheets: <select id="sheets"></select>
         <button id="btn-condorcet">Condorcet</button>
@@ -33,7 +35,7 @@
 </div>
 <script>
 var google_client_id = '233117302158-p194jdqhpbedmq9vvqbquud7rrio9ehu.apps.googleusercontent.com';
-var return_to = 'https://condorcet.ronny.tw/';
+var return_to = 'https://dev.aws.ronny.tw/';
 
 $('#btn-auth').click(function(e){
     e.preventDefault();
